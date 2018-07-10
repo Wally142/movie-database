@@ -3,7 +3,6 @@ import Movie from './components/Movies';
 import Wrapper from './components/Wrapper';
 import Title from './components/Title';
 
-
 const url = 'http://localhost:8080/api';
 
 class App extends Component {

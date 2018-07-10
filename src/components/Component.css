@@ -17,3 +17,7 @@
   align-content: flex-start;
   overflow: auto;
 }
+
+.movieText {
+  font-size: 18px;
+}
