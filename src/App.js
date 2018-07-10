@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Movie from './components/Movies';
 import Wrapper from './components/Wrapper';
 import Title from './components/Title';
+import EditForm from './components/EditForm';
 
 const url = 'http://localhost:8080/api';
 
@@ -14,7 +15,8 @@ class App extends Component {
     mpaaRating: '',
     directorName: '',
     studioName: '',
-    userRating: ''
+    userRating: '',
+    edit: ''
   }
 
   constructor(props) {
@@ -98,6 +100,12 @@ class App extends Component {
       )
   }
 
+  editMovieForm(id) {
+    if (this.state.currentDiv === "EditForm") {
+    return <EditForm />
+  }
+}
+
   render() {
     return (
       <div>
@@ -105,7 +113,7 @@ class App extends Component {
           <Title />
         </Wrapper>
         <div className="form-group text-center">
-          <h2 className="title">Store A Movie </h2>
+          <h2 className="title">Store A Movie</h2>
           <input value={this.state.movieTitle} onChange={this.updateTitle} type="text" className="form-control" placeholder="Title" />
           <br />
           <input value={this.state.releaseDate} onChange={this.updateDate} type="text" className="form-control" placeholder="Release Year" />
@@ -120,7 +128,10 @@ class App extends Component {
           <br />
           <button onClick={this.addMovie} className="btn btn-danger">Submit Movie</button>
         </div>
-        <Movie movie={this.state.movies} />
+        <Movie
+          onClick={this.editMovieForm}
+          movie={this.state.movies} />
+      
       </div>
     );
   }
