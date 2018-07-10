@@ -4,7 +4,7 @@ import './Component.css';
 const Title = (props) =>
     <div className="container text-center">
         <div className="row">
-            <h1>My Movie Database</h1>
+            <h1 className="title">My Movie Database</h1>
         </div>
     </div>
 
