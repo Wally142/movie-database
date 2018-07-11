@@ -8,7 +8,7 @@ const Movie = (props) => {
                 {props.movie.map(item => (
                     <div className="text-center col-md-4" key={item.id}>
                         <h3 className="title">Movie Information</h3>
-                        <button className="btn btn-default" onClick={() => props.onClick(item.id)}>Edit Movie</button>
+                        <button className="btn btn-default" onClick={() => props.onClick(item.id)}>Delete Movie</button>
                         <br />
                         <br />
                         <p className="movieText">Title: {item.movieTitle}</p>
