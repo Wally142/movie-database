@@ -14,9 +14,9 @@ const Movie = (props) => {
                         <p className="movieText">Title: {item.movieTitle}</p>
                         <p className="movieText">Released: {item.releaseDate}</p>
                         <p className="movieText">MPAA Rating: {item.mpaaRating}</p>
-                        <p className="movieText"> Director: {item.directorName}</p>
-                        <p className="movieText"> Studio: {item.studioName}</p>
-                        <p className="movieText"> User Score: {item.userRating}</p>
+                        <p className="movieText">Director: {item.directorName}</p>
+                        <p className="movieText">Studio: {item.studioName}</p>
+                        <p className="movieText">User Score: {item.userRating}</p>
                     </div>
                 ))}
             </div>
