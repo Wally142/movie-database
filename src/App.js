@@ -28,6 +28,7 @@ class App extends Component {
     this.updateStudio = this.updateStudio.bind(this)
     this.updateUser = this.updateUser.bind(this)
     this.addMovie = this.addMovie.bind(this)
+    this.editMovie = this.editMovie.bind(this)
   }
 
   componentDidMount() {
@@ -70,7 +71,7 @@ class App extends Component {
           movies: movieResponseArray
         })
       })
-      .catch(error => console.log(`Error with fetch getKoalas: ${error} `));
+      .catch(error => console.log(`Error with fetch getMovies: ${error} `));
   }
 
   addMovie() {
@@ -100,11 +101,51 @@ class App extends Component {
       )
   }
 
+  displayEdit = div => {
+    this.setState({ edit: "EditForm" })
+  };
+
   editMovieForm(id) {
-    if (this.state.currentDiv === "EditForm") {
-    return <EditForm />
+
+    if (this.state.edit === "EditForm") {
+      return <EditForm
+        // title={this.updateTitle}
+        // year={this.updateDate}
+        // mpaa={this.updateMpaa}
+        // director={this.updateDirector}
+        // studio={this.updateStudio}
+        // user={this.updateUser}
+        onClick={this.editMovie}
+      />
+    }
   }
-}
+
+  editMovie(id) {
+
+    const movie_data = {
+      movieTitle: this.state.movieTitle,
+      releaseDate: this.state.releaseDate,
+      mpaaRating: this.state.mpaaRating,
+      directorName: this.state.directorName,
+      studioName: this.state.studioName,
+      userRating: this.state.userRating
+    }
+
+    id = 1;
+    const request = new Request(`${url}/movie/${id}`, {
+      method: 'PUT',
+      mode: 'cors',
+      headers: new Headers({ 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*" }),
+      body: JSON.stringify(movie_data)
+    })
+
+    fetch(request)
+      .then(response => {
+        console.log('Updated Successfully')
+      })
+      .catch(error => console.log(`fetch failed update Movie: ${error}`)
+      )
+  }
 
   render() {
     return (
@@ -129,9 +170,11 @@ class App extends Component {
           <button onClick={this.addMovie} className="btn btn-danger">Submit Movie</button>
         </div>
         <Movie
-          onClick={this.editMovieForm}
+          onClick={this.displayEdit}
           movie={this.state.movies} />
-      
+        <div>
+          {this.editMovieForm()}
+        </div>
       </div>
     );
   }
