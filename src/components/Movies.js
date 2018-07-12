@@ -17,6 +17,7 @@ const Movie = (props) => {
                         <p className="movieText">Director: {item.directorName}</p>
                         <p className="movieText">Studio: {item.studioName}</p>
                         <p className="movieText">User Score: {item.userRating}</p>
+                        <button className="btn btn-default" onClick={() => props.form(item.id)}>Update Movie</button>
                     </div>
                 ))}
             </div>

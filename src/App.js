@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Movie from './components/Movies';
 import Wrapper from './components/Wrapper';
 import Title from './components/Title';
-// import EditForm from './components/EditForm';
+import EditForm from './components/EditForm';
 
 const url = 'http://localhost:8080/api';
 
@@ -10,6 +10,7 @@ class App extends Component {
 
   state = {
     movies: [],
+    prevId: 1,
     movieTitle: '',
     releaseDate: '',
     mpaaRating: '',
@@ -20,15 +21,16 @@ class App extends Component {
   }
 
   constructor(props) {
-    super(props)
-    this.updateTitle = this.updateTitle.bind(this)
-    this.updateDate = this.updateDate.bind(this)
-    this.updateMpaa = this.updateMpaa.bind(this)
-    this.updateDirector = this.updateDirector.bind(this)
-    this.updateStudio = this.updateStudio.bind(this)
-    this.updateUser = this.updateUser.bind(this)
-    this.addMovie = this.addMovie.bind(this)
-    this.deleteMovie = this.deleteMovie.bind(this)
+    super(props);
+    this.updateTitle = this.updateTitle.bind(this);
+    this.updateDate = this.updateDate.bind(this);
+    this.updateMpaa = this.updateMpaa.bind(this);
+    this.updateDirector = this.updateDirector.bind(this);
+    this.updateStudio = this.updateStudio.bind(this);
+    this.updateUser = this.updateUser.bind(this);
+    this.addMovie = this.addMovie.bind(this);
+    this.deleteMovie = this.deleteMovie.bind(this);
+    this.editMovie = this.editMovie.bind(this);
   }
 
   componentDidMount() {
@@ -101,50 +103,60 @@ class App extends Component {
       )
   }
 
-  // displayEdit = (id) => {
-  //   this.setState({ edit: "EditForm" })
-  // };
+  displayEdit = (id) => {
+    console.log(id)
+    this.setState({ edit: "EditForm" })
+    this.setState({ prevId: id })
+  };
 
-  // editMovieForm() {
+  editMovieForm() {
 
-  //   if (this.state.edit === "EditForm") {
-  //     return <EditForm
-  //       title={this.state.movieTitle}
-  //       year={this.state.releaseDate}
-  //       mpaa={this.state.mpaaRating}
-  //       director={this.state.directorName}
-  //       studio={this.state.studioName}
-  //       user={this.state.userRating}
-  //       onClick={this.editMovie}
-  //     />
-  //   }
-  // }
+    if (this.state.edit === "EditForm") {
+      return <EditForm
+        id={this.state.prevId}
+        title={this.state.movieTitle}
+        update1={this.updateTitle}
+        year={this.state.releaseDate}
+        update2={this.updateDate}
+        mpaa={this.state.mpaaRating}
+        update3={this.updateMpaa}
+        director={this.state.directorName}
+        update4={this.updateDirector}
+        studio={this.state.studioName}
+        update5={this.updateStudio}
+        user={this.state.userRating}
+        update6={this.updateUser}
+        onClick={this.editMovie}
+      />
+    }
+  }
 
-  // editMovie() {
+  editMovie(id) {
+    console.log(id)
 
-  //   const movie_data = {
-  //     movieTitle: 'dog',
-  //     releaseDate: 2011,
-  //     mpaaRating: 'hi',
-  //     directorName: 'alo',
-  //     studioName: 'studio',
-  //     userRating: 'user'
-  //   }
-  //   let id = 1;
-  //   const request = new Request(`${url}/update/${id}`, {
-  //     method: 'PUT',
-  //     mode: 'cors',
-  //     headers: new Headers({ 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*" }),
-  //     body: JSON.stringify(movie_data)
-  //   })
+    const movie_data = {
+      movieTitle: this.state.movieTitle,
+      releaseDate: this.state.releaseDate,
+      mpaaRating: this.state.mpaaRating,
+      directorName: this.state.directorName,
+      studioName: this.state.studioName,
+      userRating: this.state.userRating
+    }
+    
+    const request = new Request(`${url}/update/${id}`, {
+      method: 'PUT',
+      mode: 'cors',
+      headers: new Headers({ 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*" }),
+      body: JSON.stringify(movie_data)
+    })
 
-  //   fetch(request)
-  //     .then(response => {
-  //       console.log('Updated Successfully')
-  //     })
-  //     .catch(error => console.log(`fetch failed update Movie: ${error}`)
-  //     )
-  // }
+    fetch(request)
+      .then(response => {
+        console.log('Updated Successfully')
+      })
+      .catch(error => console.log(`fetch failed update Movie: ${error}`)
+      )
+  }
 
   deleteMovie(id) {
 
@@ -185,10 +197,11 @@ class App extends Component {
         </div>
         <Movie
           onClick={this.deleteMovie}
-          movie={this.state.movies} />
-        {/* <div>
+          movie={this.state.movies}
+          form={this.displayEdit} />
+        <div>
           {this.editMovieForm()}
-        </div> */}
+        </div>
       </div>
     );
   }
